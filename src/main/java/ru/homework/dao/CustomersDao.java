@@ -1,6 +1,9 @@
 package ru.homework.dao;
 
 import ru.homework.dao.model.Customers;
+import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NotUniqueIdException;
+import ru.homework.exceptions.NotUniqueNameException;
 
 import java.util.List;
 
@@ -15,14 +18,14 @@ public interface CustomersDao {
      *
      * @param customers
      */
-     Integer insertCustomer(Customers customers);
+     Integer insertCustomer(Customers customers) throws NotUniqueIdException, NotUniqueNameException;
 
     /**
      * Получение сотрудника по id
      *
      * @param id
      */
-     Customers selectCustById(Integer id);
+     Customers selectCustById(Integer id) throws NoSuchIdException;
 
     /**
      * Получение списка всех сотрудников
@@ -43,7 +46,7 @@ public interface CustomersDao {
      *
      * @param name
      */
-     Customers selectCustomerByName(String name);
+     Customers selectCustomerByName(String name) throws NotUniqueNameException;
 
     /**
      * Получение числа сотрудников по номеру комнаты

@@ -1,5 +1,6 @@
 package ru.homework.dao;
 
+import ru.homework.dao.config.GlobalConfig;
 import ru.homework.dao.jdbc.CustomersJDBCImpl;
 
 /**
@@ -9,6 +10,13 @@ public class CustomersDAOFactory {
 
     public static CustomersDao getCustomersDao() {
 
-        return new CustomersJDBCImpl();
+        try {
+            Class dao = Class.forName(GlobalConfig.getProperty("dao.class"));
+            return (CustomersDao) dao.newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
+

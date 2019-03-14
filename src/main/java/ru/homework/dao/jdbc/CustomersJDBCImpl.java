@@ -2,6 +2,9 @@ package ru.homework.dao.jdbc;
 
 import ru.homework.dao.CustomersDao;
 import ru.homework.dao.model.Customers;
+import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NotUniqueIdException;
+import ru.homework.exceptions.NotUniqueNameException;
 
 
 import java.util.List;
@@ -9,13 +12,13 @@ import java.util.List;
 public class CustomersJDBCImpl implements CustomersDao {
 
     @Override
-    public Integer insertCustomer(Customers customers) {
+    public Integer insertCustomer(Customers customers) throws NotUniqueIdException, NotUniqueNameException {
         Integer id = 4;
         return id;
     }
 
     @Override
-    public Customers selectCustById(Integer id) {
+    public Customers selectCustById(Integer id) throws NoSuchIdException {
         return new Customers();
     }
 
@@ -30,7 +33,7 @@ public class CustomersJDBCImpl implements CustomersDao {
     }
 
     @Override
-    public Customers selectCustomerByName(String name) {
+    public Customers selectCustomerByName(String name) throws NotUniqueNameException {
         return null;
     }
 
