@@ -4,20 +4,58 @@ import ru.homework.dao.model.Customers;
 
 import java.util.List;
 
+/**
+ * Интерфейс для определения методов взаимодействия с хранилищем данных
+ */
+
 public interface CustomersDao {
 
-    public void createDeveloper(String name, Integer roomNumber, Integer salary, String position);
+    /**
+     * Добавление сотрудника
+     *
+     * @param customers
+     */
+     Integer insertCustomer(Customers customers);
 
-    public void getCustById(Integer id);
+    /**
+     * Получение сотрудника по id
+     *
+     * @param id
+     */
+     Customers selectCustById(Integer id);
 
-    public List<Customers> getAll();
+    /**
+     * Получение списка всех сотрудников
+     *
+     * @return
+     */
+     List<Customers> selectAll();
 
-    public void removeCustomer(Integer id);
+    /**
+     * Удаление сотрудника
+     *
+     * @param id
+     */
+     void deleteCustomer(Integer id);
 
-    public void getCustomerByName(String name);
+    /**
+     * Получение сотрудника по имени
+     *
+     * @param name
+     */
+     Customers selectCustomerByName(String name);
 
-    public void countOfCustomersInRoom(Integer roomNumber);
+    /**
+     * Получение числа сотрудников по номеру комнаты
+     * @param roomNumber
+     */
+     Integer countOfCustomersInRoom(Integer roomNumber);
 
-    public List<Customers> listOfCountCustomersInRoom();
+
+    /**
+     * Получение списка комнат и числа сотрудников в них
+     * @return
+     */
+     List<Customers> listOfCountCustomersInRoom();
 
 }

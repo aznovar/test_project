@@ -3,6 +3,10 @@ package ru.homework.dao.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * Класс для хранения данных по сущности "Customers"
+ */
+
 @Entity
 @Table(name = "customers")
 public class Customers {

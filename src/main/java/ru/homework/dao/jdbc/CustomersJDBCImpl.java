@@ -9,33 +9,34 @@ import java.util.List;
 public class CustomersJDBCImpl implements CustomersDao {
 
     @Override
-    public void createDeveloper(String name, Integer roomNumber, Integer salary, String position) {
-
+    public Integer insertCustomer(Customers customers) {
+        Integer id = 4;
+        return id;
     }
 
     @Override
-    public void getCustById(Integer id) {
-
+    public Customers selectCustById(Integer id) {
+        return new Customers();
     }
 
     @Override
-    public List<Customers> getAll() {
+    public List<Customers> selectAll() {
         return null;
     }
 
     @Override
-    public void removeCustomer(Integer id) {
+    public void deleteCustomer(Integer id) {
 
     }
 
     @Override
-    public void getCustomerByName(String name) {
-
+    public Customers selectCustomerByName(String name) {
+        return null;
     }
 
     @Override
-    public void countOfCustomersInRoom(Integer roomNumber) {
-
+    public Integer countOfCustomersInRoom(Integer roomNumber) {
+        return null;
     }
 
     @Override
