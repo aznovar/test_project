@@ -1,6 +1,5 @@
 package ru.homework.service;
 
-import ru.homework.dao.model.Customers;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;

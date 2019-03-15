@@ -1,7 +1,8 @@
 package ru.homework.dao;
 
-import ru.homework.dao.model.Customers;
+import ru.homework.dao.entity.Customers;
 import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
@@ -18,7 +19,7 @@ public interface CustomersDao {
      *
      * @param customers
      */
-     Integer insertCustomer(Customers customers) throws NotUniqueIdException, NotUniqueNameException;
+     void insertCustomer(Customers customers) throws NotUniqueIdException, NotUniqueNameException;
 
     /**
      * Получение сотрудника по id
@@ -30,7 +31,7 @@ public interface CustomersDao {
     /**
      * Получение списка всех сотрудников
      *
-     * @return
+     * @return List<Customers>
      */
      List<Customers> selectAll();
 
@@ -46,7 +47,7 @@ public interface CustomersDao {
      *
      * @param name
      */
-     Customers selectCustomerByName(String name) throws NotUniqueNameException;
+     Customers selectCustomerByName(String name) throws NoSuchNameException;
 
     /**
      * Получение числа сотрудников по номеру комнаты
@@ -57,7 +58,7 @@ public interface CustomersDao {
 
     /**
      * Получение списка комнат и числа сотрудников в них
-     * @return
+     * @return List<Customers>
      */
      List<Customers> listOfCountCustomersInRoom();
 

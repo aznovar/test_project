@@ -2,15 +2,15 @@ package ru.homework.dao.params;
 
 public enum ConfigEnum {
 
-   CONFIG_NAME("contacts.properties");
+   CONFIG_NAME("src/main/database.properties");
 
-   private String contactProperties;
+   private String databaseProperties;
 
     ConfigEnum(String contProp) {
-        this.contactProperties = contactProperties;
+        this.databaseProperties = databaseProperties;
     }
 
     public String getContProp() {
-        return contactProperties;
+        return databaseProperties;
     }
 }

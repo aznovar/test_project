@@ -2,12 +2,11 @@ package ru.homework.service;
 
 import ru.homework.dao.CustomersDAOFactory;
 import ru.homework.dao.CustomersDao;
-import ru.homework.dao.model.Customers;
+import ru.homework.dao.entity.Customers;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
-import java.security.PublicKey;
 import java.util.List;
 
 public class CustomerService implements Service<Customers> {

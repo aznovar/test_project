@@ -1,4 +1,4 @@
-package ru.homework.dao.model;
+package ru.homework.dao.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
