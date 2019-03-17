@@ -1,6 +1,7 @@
 package ru.homework.service;
 
 import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface Service<T> {
 
-    Integer createCustomer(T obj) throws NotUniqueNameException, NotUniqueIdException;
+    void createCustomer(T obj) throws NotUniqueNameException, NotUniqueIdException;
 
     T getCustomerById(Integer id) throws NoSuchIdException;
 
@@ -21,7 +22,7 @@ public interface Service<T> {
 
     void removeCustomer(Integer id);
 
-    T getCustomerByName(String name) throws NotUniqueNameException;
+    T getCustomerByName(String name) throws NoSuchNameException;
 
     Integer countOfCustomersInRoom(Integer roomNumber);
 

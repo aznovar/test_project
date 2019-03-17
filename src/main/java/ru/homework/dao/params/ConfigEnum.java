@@ -2,11 +2,11 @@ package ru.homework.dao.params;
 
 public enum ConfigEnum {
 
-   CONFIG_NAME("src/main/database.properties");
+    CONFIG_NAME("src/main/database.properties");
 
-   private String databaseProperties;
+    private String databaseProperties;
 
-    ConfigEnum(String contProp) {
+    ConfigEnum(String databaseProperties) {
         this.databaseProperties = databaseProperties;
     }
 

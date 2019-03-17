@@ -4,6 +4,7 @@ import ru.homework.dao.CustomersDAOFactory;
 import ru.homework.dao.CustomersDao;
 import ru.homework.dao.entity.Customers;
 import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
@@ -18,8 +19,8 @@ public class CustomerService implements Service<Customers> {
     }
 
     @Override
-    public Integer createCustomer(Customers customers) throws NotUniqueNameException, NotUniqueIdException {
-        return customersDao.insertCustomer(customers);
+    public void createCustomer(Customers customers) throws NotUniqueNameException, NotUniqueIdException {
+        customersDao.insertCustomer(customers);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class CustomerService implements Service<Customers> {
     }
 
     @Override
-    public Customers getCustomerByName(String name) throws NotUniqueNameException {
+    public Customers getCustomerByName(String name) throws NoSuchNameException {
         return customersDao.selectCustomerByName(name);
     }
 

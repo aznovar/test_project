@@ -29,5 +29,4 @@ public class ComboConnectionBuilder implements ConnectionBuilder {
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
-
 }

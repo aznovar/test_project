@@ -87,11 +87,11 @@ public class CustomersJDBCImpl implements CustomersDao {
 
     @Override
     public void deleteCustomer(Integer id) {
-        try(Connection connection = getConnection();
-        PreparedStatement prepSt = connection.prepareStatement(DELETE_CUST)){
-            prepSt.setInt(1,id);
+        try (Connection connection = getConnection();
+             PreparedStatement prepSt = connection.prepareStatement(DELETE_CUST)) {
+            prepSt.setInt(1, id);
             prepSt.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -113,14 +113,25 @@ public class CustomersJDBCImpl implements CustomersDao {
         if (customers != null) {
             return customers;
         } else {
-            throw new NoSuchNameException("There is no record in \"customers\" with ID " + name + "\n");
+            throw new NoSuchNameException("There is no record in \"customers\" with name " + name + "\n");
         }
     }
 
 
     @Override
     public Integer countOfCustomersInRoom(Integer roomNumber) {
-        return null;
+        Integer count = null;
+        try (Connection connection = getConnection();
+             PreparedStatement prepSt = connection.prepareStatement(COUNT_CUST_IN_ROOM)) {
+            prepSt.setInt(1, roomNumber);
+            ResultSet rs = prepSt.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override

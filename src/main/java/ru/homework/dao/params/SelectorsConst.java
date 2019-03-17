@@ -18,7 +18,7 @@ public class SelectorsConst {
             "DELETE FROM customers WHERE id=?";
 
     public static final String COUNT_CUST_IN_ROOM =
-            "SELECT COUNT(Idcust) from mydb.customers WHERE Room_number=?";
+            "SELECT COUNT(Idcust)AS count FROM mydb.customers WHERE Room_number=?";
 
     public SelectorsConst() {
 
