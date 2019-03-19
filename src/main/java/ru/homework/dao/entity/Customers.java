@@ -72,4 +72,14 @@ public class Customers {
     public void setPosition(String position) {
         this.position = position;
     }
+
+    @Override
+    public String toString() {
+        return "Сотрудник:" +
+                "id=" + id +'\n'+
+                " Имя='" + name + '\n' +
+                " Номер Комнаты=" + roomNumber + '\n'+
+                " Зарплата=" + salary + '\n' +
+                " Должность='" + position + '\n';
+    }
 }

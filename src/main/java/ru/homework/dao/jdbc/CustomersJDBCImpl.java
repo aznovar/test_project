@@ -113,7 +113,7 @@ public class CustomersJDBCImpl implements CustomersDao {
         if (customers != null) {
             return customers;
         } else {
-            throw new NoSuchNameException("There is no record in \"customers\" with name " + name + "\n");
+            throw new NoSuchNameException("Нет такого сотрудника в таблице \"customers\" с именем " + name + "\n");
         }
     }
 
@@ -143,8 +143,12 @@ public class CustomersJDBCImpl implements CustomersDao {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
         statement.setString(1, name);
         try (ResultSet rs = statement.executeQuery()) {
-            rs.next();
-            return name.equalsIgnoreCase(rs.getString("name"));
+           if(rs.next()) {
+               return name.equalsIgnoreCase(rs.getString("name"));
+           }
+           else{
+               return false;
+           }
         }
     }
 
@@ -158,7 +162,7 @@ public class CustomersJDBCImpl implements CustomersDao {
 
     private Customers fillCustomer(ResultSet rs) throws SQLException {
         Customers customers = new Customers();
-        customers.setId(rs.getInt("Intcust"));
+        customers.setId(rs.getInt("Idcust"));
         customers.setName(rs.getString("Name"));
         customers.setRoomNumber(rs.getInt("Room_number"));
         customers.setPosition(rs.getString("position"));
