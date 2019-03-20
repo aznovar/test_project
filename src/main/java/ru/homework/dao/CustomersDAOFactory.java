@@ -8,6 +8,13 @@ import ru.homework.dao.jdbc.CustomersJDBCImpl;
  */
 public class CustomersDAOFactory {
 
+    /**
+     * Метод, используемый при реализации объекта CustomersDAO,
+     * ссылается на имплементацию интерфейса CustomersDAO, указанную в проперти файле
+     * возвращает объект класса имплементации DAO интерфейса
+     *
+     * @return
+     */
     public static CustomersDao getCustomersDao() {
 
         try {

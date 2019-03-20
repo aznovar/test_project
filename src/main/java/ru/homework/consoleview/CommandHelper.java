@@ -24,6 +24,11 @@ public class CommandHelper {
         showMainMenu();
     }
 
+    /**
+     * Метод позволяющий взаимодействовать с БД
+     * на уровне основных команд таких как
+     * Начать работу или выйти
+     **/
     private void showMainMenu() {
         while (true) {
             try {
@@ -53,6 +58,9 @@ public class CommandHelper {
         }
     }
 
+    /**
+     * Метод позволяющий взаимодействовать с БД на уровне требуемых запросов
+     */
     private void showBaseCommand() {
         while (true) {
             try {
@@ -63,7 +71,7 @@ public class CommandHelper {
                         "3 - Вывести список всех сотрудников\n" +
                         "4 - Удалить сотрудника из базы\n" +
                         "5 - Вывести число сотрудников в комнате\n" +
-                        "6 - Back\n");
+                        "6 - Назад\n");
                 switch (Integer.parseInt(readString())) {
                     case 0:
                         view.fireEventCreate();

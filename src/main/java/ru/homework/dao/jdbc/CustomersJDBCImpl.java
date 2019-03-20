@@ -19,10 +19,21 @@ import java.util.List;
 
 import static ru.homework.dao.params.SelectorsConst.*;
 
+/**
+ * Класс реализующий интерфейс CustomersDAO
+ * Содержит в себе методы, которые отправляют запросы к БД
+ */
 public class CustomersJDBCImpl implements CustomersDao {
+
 
     private ConnectionBuilder builder = ConnectionBuilderFactory.getConnectionBuilder();
 
+    /**
+     * Метод, при вызове которого, осуществляется подключение к БД
+     *
+     * @return
+     * @throws SQLException
+     */
     private Connection getConnection() throws SQLException {
         return builder.getConnection();
     }
@@ -39,9 +50,9 @@ public class CustomersJDBCImpl implements CustomersDao {
                 prepSt.setString(5, customers.getPosition());
                 prepSt.executeUpdate();
             } else if (existWithName(connection, customers.getName())) {
-                throw new NotUniqueNameException("Customer's name \'" + customers.getName() + "\' is not unique");
+                throw new NotUniqueNameException("Внимание сотрудник с именем \'" + customers.getName() + "\' уже есть в базе");
             } else if (existWithId(connection, customers.getId())) {
-                throw new NotUniqueIdException("Customer's id\'" + customers.getId() + "\' is not unique");
+                throw new NotUniqueIdException("Внимание сотрудник с id\'" + customers.getId() + "\' уже есть в базе");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -139,19 +150,36 @@ public class CustomersJDBCImpl implements CustomersDao {
         return null;
     }
 
+    /**
+     * Метод проверяет есть ли в текущем наполнении БД
+     * сотрудник с именем которое приходит на вход
+     *
+     * @param connection
+     * @param name
+     * @return boolean
+     * @throws SQLException
+     */
     private boolean existWithName(Connection connection, String name) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
         statement.setString(1, name);
         try (ResultSet rs = statement.executeQuery()) {
-           if(rs.next()) {
-               return name.equalsIgnoreCase(rs.getString("name"));
-           }
-           else{
-               return false;
-           }
+            if (rs.next()) {
+                return name.equalsIgnoreCase(rs.getString("name"));
+            } else {
+                return false;
+            }
         }
     }
 
+    /**
+     * Метод проверяет есть ли в текущем наполнении БД
+     * сотрудник с id пришедшем на вход
+     *
+     * @param connection
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     private boolean existWithId(Connection connection, Integer id) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
         statement.setInt(1, id);
@@ -160,6 +188,14 @@ public class CustomersJDBCImpl implements CustomersDao {
         }
     }
 
+    /**
+     * Метод заполняющий объект customers данными,
+     * которые появились после успешно выполненного запроса
+     *
+     * @param rs
+     * @return customers
+     * @throws SQLException
+     */
     private Customers fillCustomer(ResultSet rs) throws SQLException {
         Customers customers = new Customers();
         customers.setId(rs.getInt("Idcust"));

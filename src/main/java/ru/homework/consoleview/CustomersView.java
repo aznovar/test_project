@@ -31,7 +31,7 @@ public class CustomersView implements View {
 
     @Override
     public void fireEventGetById() {
-        CommandHelper.writeToConsole("Введите id нужного вам сотрудника");
+        CommandHelper.writeToConsole("Введите id нужного вам сотрудника:");
         try {
             int id = Integer.parseInt(CommandHelper.readString());
             singleSearch(service.getCustomerById(id));
@@ -80,11 +80,11 @@ public class CustomersView implements View {
     @Override
     public void fireEventGetCount() {
         CommandHelper.writeToConsole("Введите номер нужной вам комнаты");
-        try{
+        try {
             int roomNumber = Integer.parseInt(CommandHelper.readString());
             writeCount(service.countOfCustomersInRoom(roomNumber));
             return;
-        }catch (IOException e){
+        } catch (IOException e) {
             CommandHelper.writeToConsole("Неправильный номер комнаты. Попробуйте еще раз");
         }
     }
@@ -149,6 +149,7 @@ public class CustomersView implements View {
         return new Customers(id, name, roomNumber, salary, position);
     }
 
+    //TODO выделить ниженаписанные методы в отдельную сущность SearchHelper, т.к. они не совсем вписываются в данный класс
     private void singleSearch(Customers customers) {
         if (customers == null || (customers.getId() == 0 && customers.getName() == null)) {
             CommandHelper.writeToConsole("\nСотрудник с таким id не найден\n");
@@ -162,17 +163,17 @@ public class CustomersView implements View {
             CommandHelper.writeToConsole("Нечего выводить");
         } else {
             CommandHelper.writeToConsole("Все записи из таблицы сотрудников");
-           for (Customers customers : list){
-               CommandHelper.writeToConsole(customers.toString());
-           }
-           CommandHelper.writeToConsole("\n");
+            for (Customers customers : list) {
+                CommandHelper.writeToConsole(customers.toString());
+            }
+            CommandHelper.writeToConsole("\n");
         }
     }
 
-    private void writeCount(Integer count){
-        if(count == null){
+    private void writeCount(Integer count) {
+        if (count == null) {
             CommandHelper.writeToConsole("в комнате пусто");
-        } else{
+        } else {
             CommandHelper.writeToConsole("Число сотрудников в комнате: \n" + count.toString());
         }
     }

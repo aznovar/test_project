@@ -14,6 +14,9 @@ public class CustomerService implements Service<Customers> {
 
     private CustomersDao customersDao;
 
+    /**
+     * Создает сущность имплементированного интерфейса DAO
+     */
     public CustomerService() {
         customersDao = CustomersDAOFactory.getCustomersDao();
     }

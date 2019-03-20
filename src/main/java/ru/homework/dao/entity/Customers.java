@@ -1,6 +1,11 @@
 package ru.homework.dao.entity;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -11,6 +16,8 @@ import javax.persistence.Table;
 @Table(name = "customers")
 public class Customers {
 
+    @Column
+    @Id
     private Integer id;
 
     private String name;
@@ -33,6 +40,7 @@ public class Customers {
         this.position = position;
     }
 
+    @Getter
     public Integer getId() {
         return id;
     }
@@ -53,6 +61,7 @@ public class Customers {
         return position;
     }
 
+    @Setter
     public void setId(Integer id) {
         this.id = id;
     }
@@ -76,9 +85,9 @@ public class Customers {
     @Override
     public String toString() {
         return "Сотрудник:" +
-                "id=" + id +'\n'+
+                " id=" + id + '\n' +
                 " Имя='" + name + '\n' +
-                " Номер Комнаты=" + roomNumber + '\n'+
+                " Номер Комнаты=" + roomNumber + '\n' +
                 " Зарплата=" + salary + '\n' +
                 " Должность='" + position + '\n';
     }

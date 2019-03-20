@@ -1,5 +1,9 @@
 package ru.homework.dao.params;
 
+
+/**
+ * Данный класс содержит в себе основные запросы к бд
+ */
 public class SelectorsConst {
 
     public static final String INSERT_CUST =

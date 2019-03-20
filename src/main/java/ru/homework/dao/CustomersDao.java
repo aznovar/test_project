@@ -15,51 +15,53 @@ import java.util.List;
 public interface CustomersDao {
 
     /**
-     * Добавление сотрудника
+     * Метод по добавлению сотрудника
      *
      * @param customers
      */
-     void insertCustomer(Customers customers) throws NotUniqueIdException, NotUniqueNameException;
+    void insertCustomer(Customers customers) throws NotUniqueIdException, NotUniqueNameException;
 
     /**
-     * Получение сотрудника по id
+     * Метод по получению сотрудника по id
      *
      * @param id
      */
-     Customers selectCustById(Integer id) throws NoSuchIdException;
+    Customers selectCustById(Integer id) throws NoSuchIdException;
 
     /**
-     * Получение списка всех сотрудников
+     * Метод по получению списка всех сотрудников
      *
      * @return List<Customers>
      */
-     List<Customers> selectAll();
+    List<Customers> selectAll();
 
     /**
-     * Удаление сотрудника
+     * Метод по удалению сотрудника
      *
      * @param id
      */
-     void deleteCustomer(Integer id);
+    void deleteCustomer(Integer id);
 
     /**
-     * Получение сотрудника по имени
+     * Метод по получению сотрудника по имени
      *
      * @param name
      */
-     Customers selectCustomerByName(String name) throws NoSuchNameException;
+    Customers selectCustomerByName(String name) throws NoSuchNameException;
 
     /**
-     * Получение числа сотрудников по номеру комнаты
+     * Метод по получению числа сотрудников в введенном номере комнаты
+     *
      * @param roomNumber
      */
-     Integer countOfCustomersInRoom(Integer roomNumber);
+    Integer countOfCustomersInRoom(Integer roomNumber);
 
 
     /**
      * Получение списка комнат и числа сотрудников в них
+     *
      * @return List<Customers>
      */
-     List<Customers> listOfCountCustomersInRoom();
+    List<Customers> listOfCountCustomersInRoom();
 
 }
