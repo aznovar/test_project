@@ -2,11 +2,14 @@ package ru.homework.dao.connections;
 
 import java.sql.SQLException;
 
-public class ConnectionBuilderFactory {
+public final class ConnectionBuilderFactory {
 
+    private ConnectionBuilderFactory() {
+
+    }
 
     public static ConnectionBuilder getConnectionBuilder() {
-        return new ComboConnectionBuilder();
+        return new MySQLConnectionBuilder();
     }
 
     public static void connectionClose() throws SQLException {

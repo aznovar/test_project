@@ -1,7 +1,7 @@
 package ru.homework.consoleview;
 
 
-import ru.homework.dao.entity.Customers;
+import ru.homework.dao.entity.Employees;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
@@ -9,15 +9,16 @@ import ru.homework.exceptions.NotUniqueNameException;
 import ru.homework.service.Service;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 
 /**
- * Класс имплементирует интерфейс View для объекта Customers
- * Содержит методы для вызова CRUD событий объекта Customers
+ * Класс имплементирует интерфейс View для объекта Employees
+ * Содержит методы для вызова CRUD событий объекта Employees
  */
-public class CustomersView implements View {
+public class EmployeesView implements View {
 
-    private Service<Customers> service;
+    private Service<Employees> service;
 
     @Override
     public void setService(Service service) {
@@ -25,8 +26,8 @@ public class CustomersView implements View {
     }
 
     @Override
-    public void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException {
-        service.createCustomer(createCustomer());
+    public void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException,NoSuchFileException {
+        service.createEmployee(createCustomer());
     }
 
     @Override
@@ -34,7 +35,7 @@ public class CustomersView implements View {
         CommandHelper.writeToConsole("Введите id нужного вам сотрудника:");
         try {
             int id = Integer.parseInt(CommandHelper.readString());
-            singleSearch(service.getCustomerById(id));
+            singleSearch(service.getEmployeeById(id));
             return;
         } catch (IOException e) {
             CommandHelper.writeToConsole("Некорректный id. Попробуйте еще раз.\n");
@@ -48,7 +49,7 @@ public class CustomersView implements View {
         CommandHelper.writeToConsole("Введите имя нужного вам сотрудника");
         try {
             String name = CommandHelper.readString();
-            singleSearch(service.getCustomerByName(name));
+            singleSearch(service.getEmployeeByName(name));
             return;
         } catch (IOException e) {
             CommandHelper.writeToConsole("Некорректное имя. Попробуйте еще раз.\n");
@@ -58,7 +59,7 @@ public class CustomersView implements View {
     }
 
     @Override
-    public void fireEventGetAll() {
+    public void fireEventGetAll() throws NoSuchFileException {
         writeAll(service.getAll());
     }
 
@@ -68,7 +69,7 @@ public class CustomersView implements View {
             CommandHelper.writeToConsole("Input desired ID:");
             try {
                 int id = Integer.parseInt(CommandHelper.readString());
-                service.removeCustomer(id);
+                service.removeEmployee(id);
                 return;
             } catch (IOException e) {
                 CommandHelper.writeToConsole("Wrong ID. Try again.\n");
@@ -82,7 +83,7 @@ public class CustomersView implements View {
         CommandHelper.writeToConsole("Введите номер нужной вам комнаты");
         try {
             int roomNumber = Integer.parseInt(CommandHelper.readString());
-            writeCount(service.countOfCustomersInRoom(roomNumber));
+            writeCount(service.countOfEmployeeInRoom(roomNumber));
             return;
         } catch (IOException e) {
             CommandHelper.writeToConsole("Неправильный номер комнаты. Попробуйте еще раз");
@@ -94,7 +95,7 @@ public class CustomersView implements View {
 
     }
 
-    private Customers createCustomer() {
+    private Employees createCustomer() {
         int id;
         String name;
         int roomNumber;
@@ -146,25 +147,25 @@ public class CustomersView implements View {
                 CommandHelper.writeToConsole("Failed input. Try again");
             }
         }
-        return new Customers(id, name, roomNumber, salary, position);
+        return new Employees(id, name, roomNumber, salary, position);
     }
 
     //TODO выделить ниженаписанные методы в отдельную сущность SearchHelper, т.к. они не совсем вписываются в данный класс
-    private void singleSearch(Customers customers) {
-        if (customers == null || (customers.getId() == 0 && customers.getName() == null)) {
+    private void singleSearch(List<Employees> customers) {
+        if (customers == null || (customers.get(0).getId()==0)) {
             CommandHelper.writeToConsole("\nСотрудник с таким id не найден\n");
         } else {
-            CommandHelper.writeToConsole("\n" + customers.toString() + "\n");
+            CommandHelper.writeToConsole("\n" + customers + "\n");
         }
     }
 
-    private void writeAll(List<Customers> list) {
+    private void writeAll(List<Employees> list) {
         if (list.isEmpty()) {
             CommandHelper.writeToConsole("Нечего выводить");
         } else {
             CommandHelper.writeToConsole("Все записи из таблицы сотрудников");
-            for (Customers customers : list) {
-                CommandHelper.writeToConsole(customers.toString());
+            for (Employees employees : list) {
+                CommandHelper.writeToConsole(employees.toString());
             }
             CommandHelper.writeToConsole("\n");
         }

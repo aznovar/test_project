@@ -1,5 +1,6 @@
 package ru.homework.dao.entity;
 
+import com.opencsv.bean.CsvBindByName;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
@@ -9,30 +10,35 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Класс для хранения данных по сущности "Customers"
+ * Класс для хранения данных по сущности "Employees"
  */
 
 @Entity
 @Table(name = "customers")
-public class Customers {
+public class Employees {
 
     @Column
     @Id
+    @CsvBindByName
     private Integer id;
 
+    @CsvBindByName
     private String name;
 
+    @CsvBindByName
     private Integer roomNumber;
 
+    @CsvBindByName
     private Integer salary;
 
+    @CsvBindByName
     private String position;
 
-    public Customers() {
+    public Employees() {
 
     }
 
-    public Customers(Integer id, String name, Integer roomNumber, Integer salary, String position) {
+    public Employees(Integer id, String name, Integer roomNumber, Integer salary, String position) {
         this.id = id;
         this.name = name;
         this.roomNumber = roomNumber;
@@ -84,11 +90,11 @@ public class Customers {
 
     @Override
     public String toString() {
-        return "Сотрудник:" +
-                " id=" + id + '\n' +
-                " Имя='" + name + '\n' +
-                " Номер Комнаты=" + roomNumber + '\n' +
-                " Зарплата=" + salary + '\n' +
-                " Должность='" + position + '\n';
+        StringBuilder builder = new StringBuilder();
+        builder.append("{ id=").append(id).append(", Имя=")
+                .append(name).append(", Номер комнаты=").append(roomNumber).append(", Зарплата=")
+        .append(salary).append(", Должность=").append(position).append(" }");
+        return builder.toString();
     }
+
 }

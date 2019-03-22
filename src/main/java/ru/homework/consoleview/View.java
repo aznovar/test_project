@@ -4,6 +4,8 @@ import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 import ru.homework.service.Service;
 
+import java.nio.file.NoSuchFileException;
+
 /**
  * Интерфейс для определения экранного представления
  * запросов по поиску\добавлению\удалению сотрудников
@@ -24,7 +26,7 @@ public interface View {
      * @throws NotUniqueNameException
      * @throws NotUniqueIdException
      */
-    void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException;
+    void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException, NoSuchFileException;
 
     /**
      * Представление поиска сотрудника по id
@@ -34,7 +36,7 @@ public interface View {
     /**
      * Представление вывода списка сотрудников
      */
-    void fireEventGetAll();
+    void fireEventGetAll() throws NoSuchFileException;
 
     /**
      * Представление удаления сотрудника из базы

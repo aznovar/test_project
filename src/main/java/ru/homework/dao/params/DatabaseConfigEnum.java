@@ -4,13 +4,13 @@ package ru.homework.dao.params;
  * Enum содержащий в себе параметры для
  * построения конфигурации подключения к бд
  */
-public enum ConfigEnum {
+public enum DatabaseConfigEnum {
 
     CONFIG_NAME("src/main/database.properties");
 
     private String databaseProperties;
 
-    ConfigEnum(String databaseProperties) {
+    DatabaseConfigEnum(String databaseProperties) {
         this.databaseProperties = databaseProperties;
     }
 

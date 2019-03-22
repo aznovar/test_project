@@ -276,6 +276,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: com.googlecode.lanterna:lanterna:2.1.7">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/lanterna/lanterna/2.1.7/lanterna-2.1.7.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/lanterna/lanterna/2.1.7/lanterna-2.1.7-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/lanterna/lanterna/2.1.7/lanterna-2.1.7-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: com.mchange:c3p0:0.9.5.3">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/com/mchange/c3p0/0.9.5.3/c3p0-0.9.5.3.jar!/" />

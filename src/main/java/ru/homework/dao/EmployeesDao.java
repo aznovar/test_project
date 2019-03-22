@@ -1,67 +1,68 @@
 package ru.homework.dao;
 
-import ru.homework.dao.entity.Customers;
+import ru.homework.dao.entity.Employees;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 
 /**
  * Интерфейс для определения методов взаимодействия с хранилищем данных
  */
 
-public interface CustomersDao {
+public interface EmployeesDao {
 
     /**
      * Метод по добавлению сотрудника
      *
-     * @param customers
+     * @param employees
      */
-    void insertCustomer(Customers customers) throws NotUniqueIdException, NotUniqueNameException;
+    void insertEmployees(Employees employees) throws NotUniqueIdException, NotUniqueNameException, NoSuchFileException;
 
     /**
      * Метод по получению сотрудника по id
      *
      * @param id
      */
-    Customers selectCustById(Integer id) throws NoSuchIdException;
+    List<Employees> selectEmployeeById(Integer id) throws NoSuchIdException;
 
     /**
      * Метод по получению списка всех сотрудников
      *
-     * @return List<Customers>
+     * @return List<Employees>
      */
-    List<Customers> selectAll();
+    List<Employees> selectAll() throws NoSuchFileException;
 
     /**
      * Метод по удалению сотрудника
      *
      * @param id
      */
-    void deleteCustomer(Integer id);
+    void deleteEmployee(Integer id);
 
     /**
      * Метод по получению сотрудника по имени
      *
      * @param name
      */
-    Customers selectCustomerByName(String name) throws NoSuchNameException;
+    List<Employees> selectEmployeeByName(String name) throws NoSuchNameException;
 
     /**
      * Метод по получению числа сотрудников в введенном номере комнаты
      *
      * @param roomNumber
      */
-    Integer countOfCustomersInRoom(Integer roomNumber);
+    Integer countOfEmployeeInRoom(Integer roomNumber);
 
 
     /**
      * Получение списка комнат и числа сотрудников в них
      *
-     * @return List<Customers>
+     * @return List<Employees>
      */
-    List<Customers> listOfCountCustomersInRoom();
+    List<Employees> listOfEmployeeInRoom();
 
 }

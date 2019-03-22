@@ -1,0 +1,12 @@
+Id,Name,Roomnumber,Salary,Position
+100,Vasya,1,1000,DevOps
+110,Petya,1,1000,QA
+120,Kolya,5,2000,AutomationQA
+130,Jenya,4,1500,SoftwareEngineer
+140,Lena,4,1300,ManualQA
+150,Kostya,2,1100,DevOps
+160,Andrey,2,1350,AutomationQA
+170,Dima,1,1600,DevOps
+180,Sveta,5,1755,ManualQA
+190,Boris,3,9000,Boss
+777,name,4,100,4

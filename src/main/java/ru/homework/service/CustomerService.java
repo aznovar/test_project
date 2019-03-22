@@ -1,58 +1,59 @@
 package ru.homework.service;
 
-import ru.homework.dao.CustomersDAOFactory;
-import ru.homework.dao.CustomersDao;
-import ru.homework.dao.entity.Customers;
+import ru.homework.dao.DAOFactory;
+import ru.homework.dao.EmployeesDao;
+import ru.homework.dao.entity.Employees;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 
-public class CustomerService implements Service<Customers> {
+public class CustomerService implements Service<Employees> {
 
-    private CustomersDao customersDao;
+    private EmployeesDao employeesDao;
 
-    /**
-     * Создает сущность имплементированного интерфейса DAO
-     */
-    public CustomerService() {
-        customersDao = CustomersDAOFactory.getCustomersDao();
+    @Override
+    public EmployeesDao chooseTheSource(int source) {
+        DAOFactory daoFactory = DAOFactory.getDAOFactory(source);
+        employeesDao = daoFactory.getEmployeesDao();
+         return employeesDao;
     }
 
     @Override
-    public void createCustomer(Customers customers) throws NotUniqueNameException, NotUniqueIdException {
-        customersDao.insertCustomer(customers);
+    public void createEmployee(Employees employees) throws NotUniqueNameException, NotUniqueIdException, NoSuchFileException {
+        employeesDao.insertEmployees(employees);
     }
 
     @Override
-    public Customers getCustomerById(Integer id) throws NoSuchIdException {
-        return customersDao.selectCustById(id);
+    public List<Employees> getEmployeeById(Integer id) throws NoSuchIdException {
+        return employeesDao.selectEmployeeById(id);
     }
 
     @Override
-    public List<Customers> getAll() {
-        return customersDao.selectAll();
+    public List<Employees> getAll() throws NoSuchFileException{
+        return employeesDao.selectAll();
     }
 
     @Override
-    public void removeCustomer(Integer id) {
-        customersDao.deleteCustomer(id);
+    public void removeEmployee(Integer id) {
+        employeesDao.deleteEmployee(id);
     }
 
     @Override
-    public Customers getCustomerByName(String name) throws NoSuchNameException {
-        return customersDao.selectCustomerByName(name);
+    public List<Employees> getEmployeeByName(String name) throws NoSuchNameException {
+        return employeesDao.selectEmployeeByName(name);
     }
 
     @Override
-    public Integer countOfCustomersInRoom(Integer roomNumber) {
-        return customersDao.countOfCustomersInRoom(roomNumber);
+    public Integer countOfEmployeeInRoom(Integer roomNumber) {
+        return employeesDao.countOfEmployeeInRoom(roomNumber);
     }
 
     @Override
-    public List<Customers> listOfCountCustomersInRoom() {
-        return customersDao.listOfCountCustomersInRoom();
+    public List<Employees> listOfCountEmployeesInRoom() {
+        return employeesDao.listOfEmployeeInRoom();
     }
 }

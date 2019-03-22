@@ -4,7 +4,11 @@ package ru.homework.dao.params;
 /**
  * Данный класс содержит в себе основные запросы к бд
  */
-public class SelectorsConst {
+public final class DatabaseSelectorsConst {
+
+    private DatabaseSelectorsConst(){
+
+    }
 
     public static final String INSERT_CUST =
             "INSERT INTO mydb.customers(Idcust,Name,Room_number, Salary,Position) VALUES(?,?,?,?,?)";
@@ -23,9 +27,5 @@ public class SelectorsConst {
 
     public static final String COUNT_CUST_IN_ROOM =
             "SELECT COUNT(Idcust)AS count FROM mydb.customers WHERE Room_number=?";
-
-    public SelectorsConst() {
-
-    }
 
 }

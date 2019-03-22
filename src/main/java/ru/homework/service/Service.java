@@ -1,10 +1,12 @@
 package ru.homework.service;
 
+import ru.homework.dao.EmployeesDao;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 
 /**
@@ -14,6 +16,8 @@ import java.util.List;
  */
 public interface Service<T> {
 
+    EmployeesDao chooseTheSource(int i) throws NullPointerException;
+
     /**
      * Метод вызываемый для добавления сотрудника в БД
      *
@@ -21,7 +25,7 @@ public interface Service<T> {
      * @throws NotUniqueNameException
      * @throws NotUniqueIdException
      */
-    void createCustomer(T obj) throws NotUniqueNameException, NotUniqueIdException;
+    void createEmployee(T obj) throws NotUniqueNameException, NotUniqueIdException,NoSuchFileException;
 
     /**
      * Метод используется для нахождения сотрудника в базе по ID
@@ -30,21 +34,21 @@ public interface Service<T> {
      * @return
      * @throws NoSuchIdException
      */
-    T getCustomerById(Integer id) throws NoSuchIdException;
+    List<T> getEmployeeById(Integer id) throws NoSuchIdException;
 
     /**
      * Метод для получения списка всех сотрудников
      *
      * @return
      */
-    List<T> getAll();
+    List<T> getAll() throws  NoSuchFileException;
 
     /**
      * Метод используемый для удаления сотрудника из базы
      *
      * @param id
      */
-    void removeCustomer(Integer id);
+    void removeEmployee(Integer id);
 
     /**
      * Метод используется для поиска сотрудника в базе по имени
@@ -53,7 +57,7 @@ public interface Service<T> {
      * @return
      * @throws NoSuchNameException
      */
-    T getCustomerByName(String name) throws NoSuchNameException;
+    List<T> getEmployeeByName(String name) throws NoSuchNameException;
 
 
     /**
@@ -62,7 +66,7 @@ public interface Service<T> {
      * @param roomNumber
      * @return
      */
-    Integer countOfCustomersInRoom(Integer roomNumber);
+    Integer countOfEmployeeInRoom(Integer roomNumber);
 
-    List<T> listOfCountCustomersInRoom();
+    List<T> listOfCountEmployeesInRoom();
 }

@@ -1,6 +1,5 @@
 package ru.homework.consoleview;
 
-import ru.homework.dao.connections.ComboConnectionBuilder;
 import ru.homework.dao.connections.ConnectionBuilderFactory;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
@@ -16,6 +15,7 @@ public class CommandHelper {
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private View view;
     private Service service;
+
 
     /**
      * Основной метод для запуска приложения
@@ -34,26 +34,33 @@ public class CommandHelper {
             try {
                 writeToConsole("\nВведите команду:\n\n" +
                         "0 - Начать работу с базой сотрудников\n" +
-                        "1 - Выйти\n");
+                        "1 - Начать работу с данными из csv файла\n" +
+                        "2 - Выйти\n");
                 switch (Integer.parseInt(readString())) {
                     case 0:
-                        view = new CustomersView();
+                        view = new EmployeesView();
                         service = new CustomerService();
+                        service.chooseTheSource(1);
                         view.setService(service);
                         showBaseCommand();
                         break;
                     case 1:
+                        view = new EmployeesView();
+                        service = new CustomerService();
+                        service.chooseTheSource(2);
+                        view.setService(service);
+                        showBaseCommand();
+                        break;
+                    case 2:
                         ConnectionBuilderFactory.connectionClose();
                         return;
                     default:
                         throw new IllegalArgumentException();
                 }
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
                 writeToConsole("Wrong select. Try again.");
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
     }

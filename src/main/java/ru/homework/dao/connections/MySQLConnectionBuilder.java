@@ -1,9 +1,18 @@
 package ru.homework.dao.connections;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import ru.homework.dao.config.GlobalConfig;
+import com.opencsv.CSVReader;
+import com.opencsv.bean.CsvToBean;
+import ru.homework.dao.config.GlobalConfigDatabase;
 
 import java.beans.PropertyVetoException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -12,22 +21,22 @@ import java.sql.SQLException;
  * Позволяет, на основе параметров, подключиться к базе данных
  * При подключении используется интерфейс DataSource
  */
-public class ComboConnectionBuilder implements ConnectionBuilder {
+public class MySQLConnectionBuilder implements ConnectionBuilder {
 
     private ComboPooledDataSource dataSource;
 
     /**
-     * Конструктор класса ComboConnectionBuilder.
+     * Конструктор класса MySQLConnectionBuilder.
      * Устанавливает соответствующие параметры для соединения,
      * которые берутся из проперти файла database.properties
      */
-    public ComboConnectionBuilder() {
+    public MySQLConnectionBuilder() {
         try {
             dataSource = new ComboPooledDataSource();
-            dataSource.setDriverClass(GlobalConfig.getProperty("db.driver.class"));
-            dataSource.setJdbcUrl(GlobalConfig.getProperty("db.url"));
-            dataSource.setUser(GlobalConfig.getProperty("db.login"));
-            dataSource.setPassword(GlobalConfig.getProperty("db.password"));
+            dataSource.setDriverClass(GlobalConfigDatabase.getProperty("db.driver.class"));
+            dataSource.setJdbcUrl(GlobalConfigDatabase.getProperty("db.url"));
+            dataSource.setUser(GlobalConfigDatabase.getProperty("db.login"));
+            dataSource.setPassword(GlobalConfigDatabase.getProperty("db.password"));
             dataSource.setMaxPoolSize(20);
         } catch (PropertyVetoException e) {
             e.printStackTrace();
@@ -43,4 +52,5 @@ public class ComboConnectionBuilder implements ConnectionBuilder {
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
+
 }
