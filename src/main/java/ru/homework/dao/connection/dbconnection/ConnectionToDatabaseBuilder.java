@@ -1,13 +1,9 @@
-package ru.homework.dao.connections;
+package ru.homework.dao.connection.dbconnection;
 
-import com.opencsv.CSVReader;
-
-import java.io.BufferedReader;
-import java.nio.file.NoSuchFileException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public interface ConnectionBuilder {
+public interface ConnectionToDatabaseBuilder {
 
     /**
      * Метод для получения соединения с БД

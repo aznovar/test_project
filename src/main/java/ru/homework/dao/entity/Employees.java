@@ -26,7 +26,7 @@ public class Employees {
     private String name;
 
     @CsvBindByName
-    private Integer roomNumber;
+    private Long roomNumber;
 
     @CsvBindByName
     private Integer salary;
@@ -38,7 +38,7 @@ public class Employees {
 
     }
 
-    public Employees(Integer id, String name, Integer roomNumber, Integer salary, String position) {
+    public Employees(Integer id, String name, Long roomNumber, Integer salary, String position) {
         this.id = id;
         this.name = name;
         this.roomNumber = roomNumber;
@@ -55,7 +55,7 @@ public class Employees {
         return name;
     }
 
-    public Integer getRoomNumber() {
+    public Long getRoomNumber() {
         return roomNumber;
     }
 
@@ -76,7 +76,7 @@ public class Employees {
         this.name = name;
     }
 
-    public void setRoomNumber(Integer roomNumber) {
+    public void setRoomNumber(Long roomNumber) {
         this.roomNumber = roomNumber;
     }
 

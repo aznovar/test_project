@@ -1,15 +1,16 @@
-package ru.homework.dao;
+package ru.homework.dao.daofactory;
 
+import ru.homework.dao.EmployeesDao;
 import ru.homework.dao.config.GlobalConfigDatabase;
 
 /**
  * Фабрика для создания экземпляра EmployeesDao
  */
-public class DatabaseDAOFactory extends DAOFactory {
+public class DatabaseDAOFactory implements DAOFactory {
 
     /**
-     * Метод, используемый при реализации объекта CustomersDAO,
-     * при использовании базы данных ссылается на имплементацию интерфейса CustomersDAO,
+     * Метод, используемый при реализации объекта EmployeesDao,
+     * при использовании базы данных ссылается на имплементацию интерфейса EmployeesDao,
      * указанную в проперти файле и возвращает объект класса имплементации DAO интерфейса
      *
      * @return

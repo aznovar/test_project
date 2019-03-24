@@ -1,12 +1,13 @@
 package ru.homework.service;
 
-import ru.homework.dao.EmployeesDao;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,9 +15,7 @@ import java.util.List;
  *
  * @param <T>
  */
-public interface Service<T> {
-
-    EmployeesDao chooseTheSource(int i) throws NullPointerException;
+public interface Service<T>  {
 
     /**
      * Метод вызываемый для добавления сотрудника в БД
@@ -25,7 +24,7 @@ public interface Service<T> {
      * @throws NotUniqueNameException
      * @throws NotUniqueIdException
      */
-    void createEmployee(T obj) throws NotUniqueNameException, NotUniqueIdException,NoSuchFileException;
+    void createEmployee(T obj) throws IOException, NotUniqueNameException, NotUniqueIdException;
 
     /**
      * Метод используется для нахождения сотрудника в базе по ID
@@ -41,7 +40,7 @@ public interface Service<T> {
      *
      * @return
      */
-    List<T> getAll() throws  NoSuchFileException;
+    List<T> getAll() throws NoSuchFileException;
 
     /**
      * Метод используемый для удаления сотрудника из базы
@@ -66,7 +65,14 @@ public interface Service<T> {
      * @param roomNumber
      * @return
      */
-    Integer countOfEmployeeInRoom(Integer roomNumber);
+    Long countOfEmployeeInRoom(Long roomNumber);
 
-    List<T> listOfCountEmployeesInRoom();
+
+    /**
+     * Метод позволяет получать список комнат с числом сотрудников в них
+     *
+     * @param roomNumber
+     * @return
+     */
+    List<HashMap<String, Object>> listOfCountEmployeesInRoom(Long roomNumber);
 }

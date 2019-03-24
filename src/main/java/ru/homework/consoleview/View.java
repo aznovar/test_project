@@ -4,7 +4,9 @@ import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 import ru.homework.service.Service;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.List;
 
 /**
  * Интерфейс для определения экранного представления
@@ -26,7 +28,7 @@ public interface View {
      * @throws NotUniqueNameException
      * @throws NotUniqueIdException
      */
-    void fireEventCreate() throws NotUniqueNameException, NotUniqueIdException, NoSuchFileException;
+    void fireEventCreate() throws IOException, NotUniqueNameException, NotUniqueIdException, NoSuchFileException;
 
     /**
      * Представление поиска сотрудника по id
@@ -34,7 +36,7 @@ public interface View {
     void fireEventGetById();
 
     /**
-     * Представление вывода списка сотрудников
+     * Представление вывода списка всех сотрудников
      */
     void fireEventGetAll() throws NoSuchFileException;
 
@@ -53,5 +55,9 @@ public interface View {
      */
     void fireEventGetCount();
 
+
+    /**
+     * Представление для вывода списка комнат с числом сотрудников в них
+     */
     void listOfCount();
 }

@@ -6,7 +6,9 @@ import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
+import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ public interface EmployeesDao {
      *
      * @param employees
      */
-    void insertEmployees(Employees employees) throws NotUniqueIdException, NotUniqueNameException, NoSuchFileException;
+    void insertEmployees(Employees employees) throws NotUniqueIdException, NotUniqueNameException, IOException;
 
     /**
      * Метод по получению сотрудника по id
@@ -55,7 +57,7 @@ public interface EmployeesDao {
      *
      * @param roomNumber
      */
-    Integer countOfEmployeeInRoom(Integer roomNumber);
+    Long countOfEmployeeInRoom(Long roomNumber);
 
 
     /**
@@ -63,6 +65,6 @@ public interface EmployeesDao {
      *
      * @return List<Employees>
      */
-    List<Employees> listOfEmployeeInRoom();
+    List<HashMap<String,Object>> listOfRoomNumbersAndEmployeesInIt(Long roomNumber);
 
 }

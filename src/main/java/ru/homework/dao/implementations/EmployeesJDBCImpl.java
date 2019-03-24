@@ -1,8 +1,8 @@
 package ru.homework.dao.implementations;
 
 import ru.homework.dao.EmployeesDao;
-import ru.homework.dao.connections.ConnectionBuilder;
-import ru.homework.dao.connections.ConnectionBuilderFactory;
+import ru.homework.dao.connection.dbconnection.ConnectionToDatabaseBuilder;
+import ru.homework.dao.connection.ConnectionToDatabaseBuilderFactory;
 import ru.homework.dao.entity.Employees;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
@@ -10,14 +10,10 @@ import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import static ru.homework.dao.params.DatabaseSelectorsConst.*;
 
 /**
  * Класс реализующий интерфейс CustomersDAO
@@ -25,8 +21,28 @@ import static ru.homework.dao.params.DatabaseSelectorsConst.*;
  */
 public class EmployeesJDBCImpl implements EmployeesDao {
 
+    private static final String INSERT_CUST =
+            "INSERT INTO mydb.customers(Idcust,Name,Room_number, Salary,Position) VALUES(?,?,?,?,?)";
 
-    private ConnectionBuilder builder = ConnectionBuilderFactory.getConnectionBuilder();
+    private static final String SELECT_ALL =
+            "SELECT * FROM mydb.customers";
+
+    private static final String SELECT_BY_ID =
+            "SELECT * FROM mydb.customers WHERE Idcust=?";
+
+    private static final String SELECT_BY_NAME =
+            "SELECT * FROM mydb.customers WHERE name=?";
+
+    private static final String DELETE_CUST =
+            "DELETE FROM customers WHERE Idcust=?";
+
+    private static final String COUNT_CUST_IN_ROOM =
+            "SELECT COUNT(Idcust)AS count FROM mydb.customers WHERE Room_number=?";
+
+    private static final String LIST_OF_EMPLOYEES_COUNT_IN_ROOM =
+            "select room_number, count(Name) from mydb.customers where Room_number between 1 and ? group by room_number";
+
+    private ConnectionToDatabaseBuilder builder = ConnectionToDatabaseBuilderFactory.getMySQLConnectionBuilder();
 
     /**
      * Метод, при вызове которого, осуществляется подключение к БД
@@ -45,7 +61,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
                 PreparedStatement prepSt = connection.prepareStatement(INSERT_CUST);
                 prepSt.setInt(1, employees.getId());
                 prepSt.setString(2, employees.getName());
-                prepSt.setInt(3, employees.getRoomNumber());
+                prepSt.setLong(3, employees.getRoomNumber());
                 prepSt.setInt(4, employees.getSalary());
                 prepSt.setString(5, employees.getPosition());
                 prepSt.executeUpdate();
@@ -109,7 +125,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
     }
 
     @Override
-    public  List<Employees> selectEmployeeByName(String name) throws NoSuchNameException {
+    public List<Employees> selectEmployeeByName(String name) throws NoSuchNameException {
         Employees employees = null;
         List<Employees> list = new ArrayList<>();
         try (Connection connection = getConnection();
@@ -125,7 +141,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
             e.printStackTrace();
         }
         if (employees != null) {
-            return list ;
+            return list;
         } else {
             throw new NoSuchNameException("Нет такого сотрудника в таблице \"employees\" с именем " + name + "\n");
         }
@@ -133,14 +149,14 @@ public class EmployeesJDBCImpl implements EmployeesDao {
 
 
     @Override
-    public Integer countOfEmployeeInRoom(Integer roomNumber) {
-        Integer count = null;
+    public Long countOfEmployeeInRoom(Long roomNumber) {
+        Long count = null;
         try (Connection connection = getConnection();
              PreparedStatement prepSt = connection.prepareStatement(COUNT_CUST_IN_ROOM)) {
-            prepSt.setInt(1, roomNumber);
+            prepSt.setLong(1, roomNumber);
             ResultSet rs = prepSt.executeQuery();
             while (rs.next()) {
-                count = rs.getInt("count");
+                count = rs.getLong("count");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,8 +165,25 @@ public class EmployeesJDBCImpl implements EmployeesDao {
     }
 
     @Override
-    public List<Employees> listOfEmployeeInRoom() {
-        return null;
+    public List<HashMap<String, Object>> listOfRoomNumbersAndEmployeesInIt(Long roomNumber) {
+        List<HashMap<String, Object>> list = new ArrayList<>();
+        try (Connection connection = getConnection();
+             PreparedStatement prepSt = connection.prepareStatement(LIST_OF_EMPLOYEES_COUNT_IN_ROOM)) {
+            prepSt.setLong(1, roomNumber);
+            ResultSet rs = prepSt.executeQuery();
+            ResultSetMetaData md = rs.getMetaData();
+            int columns = md.getColumnCount();
+            while (rs.next()) {
+                HashMap<String, Object> row = new HashMap<>(columns);
+                for (int i = 1; i <= columns; ++i) {
+                    row.put(md.getColumnName(i), rs.getObject(i));
+                }
+                list.add(row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     /**
@@ -204,7 +237,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
         Employees employees = new Employees();
         employees.setId(rs.getInt("Idcust"));
         employees.setName(rs.getString("Name"));
-        employees.setRoomNumber(rs.getInt("Room_number"));
+        employees.setRoomNumber(rs.getLong("Room_number"));
         employees.setPosition(rs.getString("position"));
         employees.setSalary(rs.getInt("salary"));
         return employees;

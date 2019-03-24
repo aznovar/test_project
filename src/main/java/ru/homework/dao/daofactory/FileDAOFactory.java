@@ -1,8 +1,9 @@
-package ru.homework.dao;
+package ru.homework.dao.daofactory;
 
+import ru.homework.dao.EmployeesDao;
 import ru.homework.dao.implementations.EmployeesCSVImpl;
 
-public class FileDAOFactory extends DAOFactory {
+public class FileDAOFactory implements DAOFactory {
 
     /**
      * Метод, используемый при реализации объекта EmployeesDao,

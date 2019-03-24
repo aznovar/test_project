@@ -1,10 +1,10 @@
 package ru.homework.consoleview;
 
-import ru.homework.dao.connections.ConnectionBuilderFactory;
+import ru.homework.dao.connection.ConnectionToDatabaseBuilderFactory;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
-import ru.homework.service.CustomerService;
-import ru.homework.service.Service;
+import ru.homework.service.EmployeesService;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,10 +12,9 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 public class CommandHelper {
-    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private final static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private View view;
-    private Service service;
-
+    private EmployeesService service;
 
     /**
      * Основной метод для запуска приложения
@@ -39,20 +38,20 @@ public class CommandHelper {
                 switch (Integer.parseInt(readString())) {
                     case 0:
                         view = new EmployeesView();
-                        service = new CustomerService();
+                        service = new EmployeesService();
                         service.chooseTheSource(1);
                         view.setService(service);
                         showBaseCommand();
                         break;
                     case 1:
                         view = new EmployeesView();
-                        service = new CustomerService();
+                        service = new EmployeesService();
                         service.chooseTheSource(2);
                         view.setService(service);
                         showBaseCommand();
                         break;
                     case 2:
-                        ConnectionBuilderFactory.connectionClose();
+                        ConnectionToDatabaseBuilderFactory.connectionClose();
                         return;
                     default:
                         throw new IllegalArgumentException();
@@ -78,7 +77,8 @@ public class CommandHelper {
                         "3 - Вывести список всех сотрудников\n" +
                         "4 - Удалить сотрудника из базы\n" +
                         "5 - Вывести число сотрудников в комнате\n" +
-                        "6 - Назад\n");
+                        "6 - Вывести список комнат с числом сотрудников в них\n" +
+                        "7 - Назад\n");
                 switch (Integer.parseInt(readString())) {
                     case 0:
                         view.fireEventCreate();
@@ -99,6 +99,9 @@ public class CommandHelper {
                         view.fireEventGetCount();
                         break;
                     case 6:
+                        view.listOfCount();
+                        break;
+                    case 7:
                         return;
                     default:
                         throw new IllegalArgumentException();

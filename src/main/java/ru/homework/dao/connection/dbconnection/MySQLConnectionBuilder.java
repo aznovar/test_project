@@ -1,27 +1,18 @@
-package ru.homework.dao.connections;
+package ru.homework.dao.connection.dbconnection;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.opencsv.CSVReader;
-import com.opencsv.bean.CsvToBean;
 import ru.homework.dao.config.GlobalConfigDatabase;
 
 import java.beans.PropertyVetoException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * Класс реализующий интерфейс ConnectionBuilder
+ * Класс реализующий интерфейс ConnectionToDatabaseBuilder
  * Позволяет, на основе параметров, подключиться к базе данных
  * При подключении используется интерфейс DataSource
  */
-public class MySQLConnectionBuilder implements ConnectionBuilder {
+public class MySQLConnectionBuilder implements ConnectionToDatabaseBuilder {
 
     private ComboPooledDataSource dataSource;
 
