@@ -4,6 +4,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 import ru.homework.dao.connection.ConnectionToDatabaseBuilderFactory;
+import ru.homework.dao.connection.ConnectionToFileBuilderFactory;
 import ru.homework.dao.connection.fileconnection.FileConnectionBuilder;
 import ru.homework.dao.entity.Employees;
 
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class EmployeesContentParserInCsvTable implements ContentParser<Employees> {
 
-    private FileConnectionBuilder builder = ConnectionToDatabaseBuilderFactory.getCsvFile();
+    private FileConnectionBuilder builder = ConnectionToFileBuilderFactory.getCsvFile();
 
     private Path getFile(){
         return builder.getFile();
