@@ -66,6 +66,6 @@ public interface EmployeesDao {
      *
      * @return List<Employees>
      */
-    List<HashMap<String,Object>> listOfRoomNumbersAndEmployeesInIt(Long roomNumber);
+    List<HashMap<String, Object>> listOfRoomNumbersAndEmployeesInIt(Long roomNumber);
 
 }

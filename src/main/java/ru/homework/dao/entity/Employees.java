@@ -94,7 +94,7 @@ public class Employees {
         StringBuilder builder = new StringBuilder();
         builder.append("{ id=").append(id).append(", Имя=")
                 .append(name).append(", Номер комнаты=").append(roomNumber).append(", Зарплата=")
-        .append(salary).append(", Должность=").append(position).append(" }");
+                .append(salary).append(", Должность=").append(position).append(" }");
         return builder.toString();
     }
 

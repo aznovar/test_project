@@ -54,7 +54,7 @@ public class EmployeesCSVImpl implements EmployeesDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Employees> selectEmployeeById(Integer id)  {
+    public List<Employees> selectEmployeeById(Integer id) {
         List<Employees> employees1 = contentParser.getContentOfFile();
         return employees1.stream()
                 .filter(it -> it.getId().equals(id))
@@ -122,6 +122,15 @@ public class EmployeesCSVImpl implements EmployeesDao {
         return list;
     }
 
+    /**
+     * Метод заполняет объект типа хэш-мап двумя параметрами
+     *
+     * @param number    - это номер комнаты,в которой нужно посчитать число сотрудников
+     * @param employees - это список сотрудников и инфы о них, спарсенный с файла.
+     *                  По этому списку, при помощи параметра number, выводится значение
+     *                  числа сотрудников в комнате
+     * @return row - хэш-мапа заполненная двумя параметрами: номером комнаты и числом сотрудников в ней
+     */
     private HashMap<String, Object> fillTheHashMapOfCount(final Long number, List<Employees> employees) {
         HashMap<String, Object> row = new HashMap<>();
         row.put("В комнате номер:" + number.toString() + " число сотрудников", employees.stream()

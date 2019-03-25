@@ -11,12 +11,19 @@ import java.nio.file.NoSuchFileException;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Класс имплементирующий интерфейс Service, для сущности Employees
+ */
 public class EmployeesService implements Service<Employees> {
 
     private EmployeesDao employeesDao;
 
     /**
-     * При создании
+     * При создании экземпляра класса EmployeesService можно,
+     * в качестве параметров в конструкторе передать класс, позволяющий выбрать источник данных
+     * и порядковый номер этого источника.
+     * Источник выбирается под DAO
+     *
      * @param employeesSourceDistributor
      * @param source
      */
