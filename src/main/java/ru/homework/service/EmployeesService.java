@@ -1,6 +1,5 @@
 package ru.homework.service;
 
-import ru.homework.dao.daofactory.DAOFactory;
 import ru.homework.dao.EmployeesDao;
 import ru.homework.dao.entity.Employees;
 import ru.homework.exceptions.NoSuchIdException;
@@ -8,30 +7,20 @@ import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
-import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.HashMap;
 import java.util.List;
 
-public class EmployeesService implements Service<Employees>, SourceDistributor<EmployeesDao> {
+public class EmployeesService implements Service<Employees> {
 
     private EmployeesDao employeesDao;
 
-    public static Service getExemplarOfEmployeesService() {
-        return new EmployeesService();
+    public EmployeesService(SourceDistributor<EmployeesDao> employeesSourceDistributor, int source) {
+        employeesDao = employeesSourceDistributor.chooseTheSource(source);
     }
 
     @Override
-    public EmployeesDao chooseTheSource(int source) {
-        DAOFactory daoFactory = DAOFactory.getDAOFactory(source);
-        if (daoFactory.getEmployeesDao() != null) {
-            employeesDao = daoFactory.getEmployeesDao();
-        }
-        return employeesDao;
-    }
-
-    @Override
-    public void createEmployee(Employees employees) throws IOException, NotUniqueNameException, NotUniqueIdException {
+    public void createEmployee(Employees employees) throws NotUniqueNameException, NotUniqueIdException {
         employeesDao.insertEmployees(employees);
     }
 

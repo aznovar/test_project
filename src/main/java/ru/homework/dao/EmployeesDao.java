@@ -5,6 +5,7 @@ import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
+import ru.homework.service.SourceDistributor;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -22,7 +23,7 @@ public interface EmployeesDao {
      *
      * @param employees
      */
-    void insertEmployees(Employees employees) throws NotUniqueIdException, NotUniqueNameException, IOException;
+    void insertEmployees(Employees employees) throws NotUniqueIdException, NotUniqueNameException;
 
     /**
      * Метод по получению сотрудника по id

@@ -1,9 +1,13 @@
 package ru.homework.dao.implementations;
 
+import org.apache.log4j.Logger;
+import ru.homework.consoleview.CommandHelper;
 import ru.homework.dao.EmployeesDao;
 import ru.homework.dao.connection.dbconnection.ConnectionToDatabaseBuilder;
 import ru.homework.dao.connection.ConnectionToDatabaseBuilderFactory;
 import ru.homework.dao.entity.Employees;
+import ru.homework.dao.helpers.EmployeesFiller;
+import ru.homework.dao.helpers.FillTheEntityBeanAfterReceivingResultSet;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
@@ -43,6 +47,8 @@ public class EmployeesJDBCImpl implements EmployeesDao {
             "select room_number, count(Name) from mydb.customers where Room_number between 1 and ? group by room_number";
 
     private ConnectionToDatabaseBuilder builder = ConnectionToDatabaseBuilderFactory.getMySQLConnectionBuilder();
+    private static final Logger log = Logger.getLogger(EmployeesJDBCImpl.class);
+    private FillTheEntityBeanAfterReceivingResultSet<Employees> employeesFiller = new EmployeesFiller();
 
     /**
      * Метод, при вызове которого, осуществляется подключение к БД
@@ -71,7 +77,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
                 throw new NotUniqueIdException("Внимание сотрудник с id\'" + employees.getId() + "\' уже есть в базе");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+           log.error(e);
         }
     }
 
@@ -84,17 +90,17 @@ public class EmployeesJDBCImpl implements EmployeesDao {
             prepSt.setInt(1, id);
             try (ResultSet resultSet = prepSt.executeQuery()) {
                 while (resultSet.next()) {
-                    employees = fillCustomer(resultSet);
+                    employees = employeesFiller.fiilTheEntityBeanByResultSet(resultSet);
                     list.add(employees);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         if (employees != null) {
             return list;
         } else {
-            throw new NoSuchIdException("There is no record in \"employees\" with ID " + id + "\n");
+            throw new NoSuchIdException("Нет записи в\"employees\" с ID = " + id + "\n");
         }
     }
 
@@ -105,10 +111,10 @@ public class EmployeesJDBCImpl implements EmployeesDao {
              PreparedStatement pst = con.prepareStatement(SELECT_ALL);
              ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
-                list.add(fillCustomer(rs));
+                list.add(employeesFiller.fiilTheEntityBeanByResultSet(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+           log.error(e);
         }
         return list;
     }
@@ -120,7 +126,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
             prepSt.setInt(1, id);
             prepSt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -133,12 +139,12 @@ public class EmployeesJDBCImpl implements EmployeesDao {
             prepSt.setString(1, name);
             try (ResultSet resultSet = prepSt.executeQuery()) {
                 while (resultSet.next()) {
-                    employees = fillCustomer(resultSet);
+                    employees = employeesFiller.fiilTheEntityBeanByResultSet(resultSet);
                     list.add(employees);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         if (employees != null) {
             return list;
@@ -159,7 +165,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
                 count = rs.getLong("count");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+           log.error(e);
         }
         return count;
     }
@@ -181,7 +187,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
                 list.add(row);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return list;
     }
@@ -224,22 +230,4 @@ public class EmployeesJDBCImpl implements EmployeesDao {
         }
     }
 
-    /**
-     * Метод заполняющий объект customers данными,
-     * которые появились после успешно выполненного запроса
-     *
-     * @param rs
-     * @return customers
-     * @throws SQLException
-     */
-    //TODO выделить в отдельный класс
-    private Employees fillCustomer(ResultSet rs) throws SQLException {
-        Employees employees = new Employees();
-        employees.setId(rs.getInt("Idcust"));
-        employees.setName(rs.getString("Name"));
-        employees.setRoomNumber(rs.getLong("Room_number"));
-        employees.setPosition(rs.getString("position"));
-        employees.setSalary(rs.getInt("salary"));
-        return employees;
-    }
 }

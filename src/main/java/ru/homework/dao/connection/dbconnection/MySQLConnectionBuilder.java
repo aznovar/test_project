@@ -1,6 +1,8 @@
 package ru.homework.dao.connection.dbconnection;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.apache.log4j.Logger;
+import ru.homework.consoleview.CommandHelper;
 import ru.homework.dao.config.GlobalConfigDatabase;
 
 import java.beans.PropertyVetoException;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
  */
 public class MySQLConnectionBuilder implements ConnectionToDatabaseBuilder {
 
+    private static final Logger log = Logger.getLogger(CommandHelper.class);
     private ComboPooledDataSource dataSource;
 
     /**
@@ -30,7 +33,7 @@ public class MySQLConnectionBuilder implements ConnectionToDatabaseBuilder {
             dataSource.setPassword(GlobalConfigDatabase.getProperty("db.password"));
             dataSource.setMaxPoolSize(20);
         } catch (PropertyVetoException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 

@@ -21,7 +21,7 @@ public class CsvTest {
 
     public static void main(String[] args) throws IOException {
         List<HashMap<String, Object>> list = new ArrayList<>();
-        String fileName = "src/main/resources/customers.csv";
+        String fileName = "src/main/resources/employees.csv";
         Path myPath = Paths.get(fileName);
         int number = 1;
         try (BufferedReader br = Files.newBufferedReader(myPath)) {

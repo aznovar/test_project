@@ -1,5 +1,6 @@
 package ru.homework.service;
 
+import ru.homework.dao.EmployeesDao;
 import ru.homework.exceptions.NoSuchIdException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
@@ -11,11 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Интерфейс содержит методы для обработки CRUD событий
+ * Интерфейс содержит методы для обработки CRUD событий.
+ * является прослойкой между слоем представления и слоем данных.
+ *
  *
  * @param <T>
  */
-public interface Service<T>  {
+public interface Service<T> {
 
     /**
      * Метод вызываемый для добавления сотрудника в БД
@@ -24,7 +27,7 @@ public interface Service<T>  {
      * @throws NotUniqueNameException
      * @throws NotUniqueIdException
      */
-    void createEmployee(T obj) throws IOException, NotUniqueNameException, NotUniqueIdException;
+    void createEmployee(T obj) throws NotUniqueNameException, NotUniqueIdException;
 
     /**
      * Метод используется для нахождения сотрудника в базе по ID

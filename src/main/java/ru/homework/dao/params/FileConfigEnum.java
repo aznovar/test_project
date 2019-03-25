@@ -1,7 +1,7 @@
 package ru.homework.dao.params;
 
 public enum FileConfigEnum {
-    PATH_TO_CSV_TABLE("src/main/resources/customers.csv");
+    PATH_TO_CSV_TABLE("src/main/resources/employees.csv");
 
     private String pathToFile;
 

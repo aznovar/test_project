@@ -1,18 +1,24 @@
-package ru.homework.consoleview;
+package ru.homework.consoleview.helpers;
 
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Используя этот интерфейс можно осуществить вывод на консоль пришедших на вход параметров
+ * @param <T>
+ */
 public interface OutputHelper<T> {
 
+
     /**
-     * Выводит на консоль (додумать)
+     * Выводит на консоль результат поиска, как правило используется для вывода строки из таблицы
+     * строка будет являться частью списка
      * @param list
      */
     void outputAfterSingleSearch(List<T> list);
 
     /**
-     * Вывод на консоль всей таблицы
+     * Вывод на консоль всей таблицы в виде списка
      * @param list
      */
     void outputAll(List<T> list);

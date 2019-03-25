@@ -1,5 +1,7 @@
 package ru.homework.dao.daofactory;
 
+import org.apache.log4j.Logger;
+import ru.homework.consoleview.CommandHelper;
 import ru.homework.dao.EmployeesDao;
 import ru.homework.dao.config.GlobalConfigDatabase;
 
@@ -7,6 +9,8 @@ import ru.homework.dao.config.GlobalConfigDatabase;
  * Фабрика для создания экземпляра EmployeesDao
  */
 public class DatabaseDAOFactory implements DAOFactory {
+
+    private static final Logger log = Logger.getLogger(CommandHelper.class);
 
     /**
      * Метод, используемый при реализации объекта EmployeesDao,
@@ -21,7 +25,7 @@ public class DatabaseDAOFactory implements DAOFactory {
             Class dao = Class.forName(GlobalConfigDatabase.getProperty("dao.class"));
             return (EmployeesDao) dao.newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            ex.printStackTrace();
+            log.error(ex);
         }
         return null;
     }

@@ -6,7 +6,6 @@ import ru.homework.service.Service;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
-import java.util.List;
 
 /**
  * Интерфейс для определения экранного представления
@@ -16,7 +15,8 @@ public interface View {
 
     /**
      * Метод для задания конкретной сущности
-     * наполнение которой мы будем выводить на экран
+     * по которой мы будем выводить на экран
+     * результаты запросов работы с ней
      *
      * @param service
      */
@@ -28,7 +28,7 @@ public interface View {
      * @throws NotUniqueNameException
      * @throws NotUniqueIdException
      */
-    void fireEventCreate() throws IOException, NotUniqueNameException, NotUniqueIdException, NoSuchFileException;
+    void fireEventCreate() throws IOException, NotUniqueNameException, NotUniqueIdException;
 
     /**
      * Представление поиска сотрудника по id
