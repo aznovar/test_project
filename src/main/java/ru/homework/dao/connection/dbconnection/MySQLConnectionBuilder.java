@@ -13,6 +13,7 @@ import java.sql.SQLException;
  * Класс реализующий интерфейс ConnectionToDatabaseBuilder
  * Позволяет, на основе параметров, подключиться к базе данных
  * При подключении используется интерфейс DataSource
+ * В качестве БД - MySQL
  */
 public class MySQLConnectionBuilder implements ConnectionToDatabaseBuilder {
 

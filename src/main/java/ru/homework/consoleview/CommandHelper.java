@@ -1,7 +1,7 @@
 package ru.homework.consoleview;
 
 import org.apache.log4j.Logger;
-import ru.homework.dao.connection.ConnectionToDatabaseBuilderFactory;
+import ru.homework.dao.connection.dbconnection.ConnectionToDatabaseBuilderFactory;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 import ru.homework.service.EmployeesService;
@@ -15,8 +15,7 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 /**
- * Класс содержит основные методы для отображения на консоли результатов поиска(запроса)
- * по БД\файлу\etc
+ * Класс содержит основные методы для управления отображением результатов запросов к источнику данных
  */
 public class CommandHelper {
 

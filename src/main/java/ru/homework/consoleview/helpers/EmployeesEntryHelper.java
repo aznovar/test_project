@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class EmployeesEntryHelper implements EntryHelper<Employees> {
+
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
     @Override
     public Employees manualEntitiesParameterEntry() {
         int id;

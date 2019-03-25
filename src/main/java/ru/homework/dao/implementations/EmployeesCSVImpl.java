@@ -5,28 +5,30 @@ import com.opencsv.bean.*;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import ru.homework.dao.EmployeesDao;
-import ru.homework.dao.connection.ConnectionToFileBuilderFactory;
+import ru.homework.dao.connection.fileconnection.ConnectionToFileBuilderFactory;
 import ru.homework.dao.connection.fileconnection.FileConnectionBuilder;
 import ru.homework.dao.entity.Employees;
 import ru.homework.dao.helpers.ContentParser;
 import ru.homework.dao.helpers.EmployeesContentParserInCsvTable;
-import ru.homework.exceptions.NoSuchIdException;
-import ru.homework.exceptions.NoSuchNameException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Имплементация интерфейса EmployeesDao, реализующая методы
+ * содержащие в себе CRUD запросы к файлу типа Csv
+ */
 public class EmployeesCSVImpl implements EmployeesDao {
 
     private FileConnectionBuilder builder = ConnectionToFileBuilderFactory.getCsvFile();
     private ContentParser contentParser = EmployeesContentParserInCsvTable.getExemplarOfContentParser();
+
     private Path getFile() {
         return builder.getFile();
     }

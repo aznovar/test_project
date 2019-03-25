@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 /**
  * Класс для хранения данных по сущности "Employees"
+ * Модель данных на основе таблицы Employees
  */
 
 @Entity

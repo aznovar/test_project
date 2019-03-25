@@ -15,6 +15,11 @@ public class EmployeesService implements Service<Employees> {
 
     private EmployeesDao employeesDao;
 
+    /**
+     * При создании
+     * @param employeesSourceDistributor
+     * @param source
+     */
     public EmployeesService(SourceDistributor<EmployeesDao> employeesSourceDistributor, int source) {
         employeesDao = employeesSourceDistributor.chooseTheSource(source);
     }

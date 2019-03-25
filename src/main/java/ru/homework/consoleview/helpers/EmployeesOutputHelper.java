@@ -11,6 +11,7 @@ import java.util.List;
  * на консоли параметров сущности Employee пришедших после обработки таблицы бд\файла\etc определенным запросом
  */
 public final class EmployeesOutputHelper implements OutputHelper<Employees> {
+
     private static final Logger log = Logger.getLogger(EmployeesOutputHelper.class);
 
     @Override

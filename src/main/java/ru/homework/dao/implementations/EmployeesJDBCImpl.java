@@ -1,10 +1,9 @@
 package ru.homework.dao.implementations;
 
 import org.apache.log4j.Logger;
-import ru.homework.consoleview.CommandHelper;
 import ru.homework.dao.EmployeesDao;
 import ru.homework.dao.connection.dbconnection.ConnectionToDatabaseBuilder;
-import ru.homework.dao.connection.ConnectionToDatabaseBuilderFactory;
+import ru.homework.dao.connection.dbconnection.ConnectionToDatabaseBuilderFactory;
 import ru.homework.dao.entity.Employees;
 import ru.homework.dao.helpers.EmployeesFiller;
 import ru.homework.dao.helpers.FillTheEntityBeanAfterReceivingResultSet;
@@ -20,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Класс реализующий интерфейс CustomersDAO
+ * Класс реализующий интерфейс EmployeesDao
  * Содержит в себе методы, которые отправляют запросы к БД
  */
 public class EmployeesJDBCImpl implements EmployeesDao {
@@ -64,20 +63,21 @@ public class EmployeesJDBCImpl implements EmployeesDao {
     public void insertEmployees(Employees employees) throws NotUniqueIdException, NotUniqueNameException {
         try (Connection connection = getConnection()) {
             if (employees.getId() != 0 && !existWithName(connection, employees.getName())) {
-                PreparedStatement prepSt = connection.prepareStatement(INSERT_CUST);
-                prepSt.setInt(1, employees.getId());
-                prepSt.setString(2, employees.getName());
-                prepSt.setLong(3, employees.getRoomNumber());
-                prepSt.setInt(4, employees.getSalary());
-                prepSt.setString(5, employees.getPosition());
-                prepSt.executeUpdate();
+                try (PreparedStatement prepSt = connection.prepareStatement(INSERT_CUST)) {
+                    prepSt.setInt(1, employees.getId());
+                    prepSt.setString(2, employees.getName());
+                    prepSt.setLong(3, employees.getRoomNumber());
+                    prepSt.setInt(4, employees.getSalary());
+                    prepSt.setString(5, employees.getPosition());
+                    prepSt.executeUpdate();
+                }
             } else if (existWithName(connection, employees.getName())) {
                 throw new NotUniqueNameException("Внимание сотрудник с именем \'" + employees.getName() + "\' уже есть в базе");
             } else if (existWithId(connection, employees.getId())) {
                 throw new NotUniqueIdException("Внимание сотрудник с id\'" + employees.getId() + "\' уже есть в базе");
             }
         } catch (SQLException e) {
-           log.error(e);
+            log.error(e);
         }
     }
 
@@ -100,7 +100,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
         if (employees != null) {
             return list;
         } else {
-            throw new NoSuchIdException("Нет записи в\"employees\" с ID = " + id + "\n");
+            throw new NoSuchIdException("Нет записи в\"employees\" с ID " + id + "\n");
         }
     }
 
@@ -114,7 +114,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
                 list.add(employeesFiller.fiilTheEntityBeanByResultSet(rs));
             }
         } catch (SQLException e) {
-           log.error(e);
+            log.error(e);
         }
         return list;
     }
@@ -160,12 +160,13 @@ public class EmployeesJDBCImpl implements EmployeesDao {
         try (Connection connection = getConnection();
              PreparedStatement prepSt = connection.prepareStatement(COUNT_CUST_IN_ROOM)) {
             prepSt.setLong(1, roomNumber);
-            ResultSet rs = prepSt.executeQuery();
-            while (rs.next()) {
-                count = rs.getLong("count");
+            try (ResultSet rs = prepSt.executeQuery()) {
+                while (rs.next()) {
+                    count = rs.getLong("count");
+                }
             }
         } catch (SQLException e) {
-           log.error(e);
+            log.error(e);
         }
         return count;
     }
@@ -176,15 +177,16 @@ public class EmployeesJDBCImpl implements EmployeesDao {
         try (Connection connection = getConnection();
              PreparedStatement prepSt = connection.prepareStatement(LIST_OF_EMPLOYEES_COUNT_IN_ROOM)) {
             prepSt.setLong(1, roomNumber);
-            ResultSet rs = prepSt.executeQuery();
-            ResultSetMetaData md = rs.getMetaData();
-            int columns = md.getColumnCount();
-            while (rs.next()) {
-                HashMap<String, Object> row = new HashMap<>(columns);
-                for (int i = 1; i <= columns; ++i) {
-                    row.put(md.getColumnName(i), rs.getObject(i));
+            try (ResultSet rs = prepSt.executeQuery()) {
+                ResultSetMetaData md = rs.getMetaData();
+                int columns = md.getColumnCount();
+                while (rs.next()) {
+                    HashMap<String, Object> row = new HashMap<>(columns);
+                    for (int i = 1; i <= columns; ++i) {
+                        row.put(md.getColumnName(i), rs.getObject(i));
+                    }
+                    list.add(row);
                 }
-                list.add(row);
             }
         } catch (SQLException e) {
             log.error(e);
@@ -202,13 +204,14 @@ public class EmployeesJDBCImpl implements EmployeesDao {
      * @throws SQLException
      */
     private boolean existWithName(Connection connection, String name) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME);
-        statement.setString(1, name);
-        try (ResultSet rs = statement.executeQuery()) {
-            if (rs.next()) {
-                return name.equalsIgnoreCase(rs.getString("name"));
-            } else {
-                return false;
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_BY_NAME)) {
+            statement.setString(1, name);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return name.equalsIgnoreCase(rs.getString("name"));
+                } else {
+                    return false;
+                }
             }
         }
     }
@@ -223,10 +226,11 @@ public class EmployeesJDBCImpl implements EmployeesDao {
      * @throws SQLException
      */
     private boolean existWithId(Connection connection, Integer id) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID);
-        statement.setInt(1, id);
-        try (ResultSet rs = statement.executeQuery()) {
-            return rs.next();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID)) {
+            statement.setInt(1, id);
+            try (ResultSet rs = statement.executeQuery()) {
+                return rs.next();
+            }
         }
     }
 

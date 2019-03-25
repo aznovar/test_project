@@ -1,10 +1,10 @@
-package ru.homework.dao.connection;
-
-import ru.homework.dao.connection.dbconnection.ConnectionToDatabaseBuilder;
-import ru.homework.dao.connection.dbconnection.MySQLConnectionBuilder;
+package ru.homework.dao.connection.dbconnection;
 
 import java.sql.SQLException;
 
+/**
+ * Данный класс служит для инстанса объектов реализаций интерфейса ConnectionToDatabaseBuilder
+ */
 public final class ConnectionToDatabaseBuilderFactory {
 
     private ConnectionToDatabaseBuilderFactory() {
