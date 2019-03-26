@@ -1,7 +1,7 @@
 package ru.homework.dao.daofactory;
 
 import org.apache.log4j.Logger;
-import ru.homework.consoleview.CommandHelper;
+import ru.homework.consoleview.ConsoleComand;
 import ru.homework.dao.EmployeesDao;
 import ru.homework.dao.config.GlobalConfigDatabase;
 
@@ -10,7 +10,7 @@ import ru.homework.dao.config.GlobalConfigDatabase;
  */
 public class DatabaseDAOFactory implements DAOFactory {
 
-    private static final Logger log = Logger.getLogger(CommandHelper.class);
+    private static final Logger log = Logger.getLogger(ConsoleComand.class);
 
     /**
      * Метод, используемый при реализации объекта EmployeesDao,

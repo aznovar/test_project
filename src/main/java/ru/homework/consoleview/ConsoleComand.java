@@ -17,11 +17,11 @@ import java.sql.SQLException;
 /**
  * Класс содержит основные методы для управления отображением результатов запросов к источнику данных
  */
-public class CommandHelper {
+public class ConsoleComand {
 
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private View view;
-    private static final Logger log = Logger.getLogger(CommandHelper.class);
+    private static final Logger log = Logger.getLogger(ConsoleComand.class);
 
 
     /**
@@ -79,7 +79,7 @@ public class CommandHelper {
             try {
                 writeToConsole("\nВыберите команду:\n\n" +
                         "0 - Добавить сотрудника\n" +
-                        "1 - Найти сотрудника по id\n" +
+                        "1 - Найти сотрудника по номеру комнаты\n" +
                         "2 - Найти сотрудника по имени\n" +
                         "3 - Вывести список всех сотрудников\n" +
                         "4 - Удалить сотрудника из базы\n" +
@@ -91,7 +91,7 @@ public class CommandHelper {
                         view.fireEventCreate();
                         break;
                     case 1:
-                        view.fireEventGetById();
+                        view.fireEventGetByRoomNumber();
                         break;
                     case 2:
                         view.fireEventGetByName();

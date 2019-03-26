@@ -1,11 +1,12 @@
 package ru.homework;
 
-import ru.homework.consoleview.CommandHelper;
+import ru.homework.consoleview.ConsoleComand;
 import ru.homework.dao.config.GlobalConfigDatabase;
 
 import java.io.IOException;
 
 public class StartApp {
+
 
     public static void main(String[] args) {
         try {
@@ -13,6 +14,6 @@ public class StartApp {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        new CommandHelper().startApp();
+        new ConsoleComand().startApp();
     }
 }

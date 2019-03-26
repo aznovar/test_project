@@ -7,7 +7,7 @@ import ru.homework.consoleview.helpers.EmployeesOutputHelper;
 import ru.homework.consoleview.helpers.EntryHelper;
 import ru.homework.consoleview.helpers.OutputHelper;
 import ru.homework.dao.entity.Employees;
-import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NoSuchRoomNumberException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
@@ -26,7 +26,7 @@ import java.nio.file.NoSuchFileException;
 public class EmployeesView implements View {
 
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private static final Logger log = Logger.getLogger(CommandHelper.class);
+    private static final Logger log = Logger.getLogger(ConsoleComand.class);
     private Service<Employees> service;
     private OutputHelper<Employees> outputHelper = new EmployeesOutputHelper();
     private EntryHelper<Employees> entryHelper = new EmployeesEntryHelper();
@@ -42,14 +42,14 @@ public class EmployeesView implements View {
     }
 
     @Override
-    public void fireEventGetById() {
-        System.out.println("Введите id нужного вам сотрудника:");
+    public void fireEventGetByRoomNumber() {
+        System.out.println("Введите номер комнаты:");
         try {
-            int id = Integer.parseInt(reader.readLine());
-            outputHelper.outputAfterSingleSearch(service.getEmployeeById(id));
+            Long id = Long.parseLong(reader.readLine());
+            outputHelper.outputAfterSingleSearch(service.getEmployeeByRoomNumber(id));
         } catch (IOException e) {
-            System.out.println("Некорректный id. Попробуйте еще раз.\n");
-        } catch (NoSuchIdException e) {
+            System.out.println("Некорректный номер. Попробуйте еще раз.\n");
+        } catch (NoSuchRoomNumberException e) {
             System.out.println(e.getMessage());
         }
     }

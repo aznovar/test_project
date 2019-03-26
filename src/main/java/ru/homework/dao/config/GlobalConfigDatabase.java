@@ -1,9 +1,10 @@
 package ru.homework.dao.config;
 
-import ru.homework.dao.params.DatabaseConfigEnum;
+import ru.homework.StartApp;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 public final class GlobalConfigDatabase {
@@ -32,11 +33,12 @@ public final class GlobalConfigDatabase {
      * @param name
      * @throws IOException
      */
-    public static void initGlobalConfig(String name) throws IOException {
-        if (name != null && !name.trim().isEmpty()) {
-            GLOBAL_CONFIG.load(new FileReader(name));
+    public static void initGlobalConfig(InputStream name) throws IOException {
+        InputStream is = StartApp.class.getClassLoader().getResourceAsStream("database.properties");
+        if (name != null) {
+            GLOBAL_CONFIG.load(new InputStreamReader(name));
         } else {
-            GLOBAL_CONFIG.load(new FileReader(DatabaseConfigEnum.CONFIG_NAME.getContProp()));
+            GLOBAL_CONFIG.load(new InputStreamReader(is));
         }
     }
 

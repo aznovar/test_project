@@ -33,7 +33,7 @@ public interface View {
     /**
      * Представление поиска сотрудника по id
      */
-    void fireEventGetById();
+    void fireEventGetByRoomNumber();
 
     /**
      * Представление вывода списка всех сотрудников

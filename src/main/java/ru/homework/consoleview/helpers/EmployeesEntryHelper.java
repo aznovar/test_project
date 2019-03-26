@@ -6,6 +6,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Класс имплементирующий интерфейс EntryHelper, для сущности Employees
+ */
 public class EmployeesEntryHelper implements EntryHelper<Employees> {
 
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

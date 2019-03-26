@@ -7,7 +7,7 @@ import ru.homework.dao.connection.dbconnection.ConnectionToDatabaseBuilderFactor
 import ru.homework.dao.entity.Employees;
 import ru.homework.dao.helpers.EmployeesFiller;
 import ru.homework.dao.helpers.FillTheEntityBeanAfterReceivingResultSet;
-import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NoSuchRoomNumberException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
@@ -25,25 +25,25 @@ import java.util.List;
 public class EmployeesJDBCImpl implements EmployeesDao {
 
     private static final String INSERT_CUST =
-            "INSERT INTO mydb.customers(Idcust,Name,Room_number, Salary,Position) VALUES(?,?,?,?,?)";
+            "INSERT INTO mydb.employee(Idcust,Name,Room_number, Salary,Position) VALUES(?,?,?,?,?)";
 
     private static final String SELECT_ALL =
-            "SELECT * FROM mydb.customers";
+            "SELECT * FROM mydb.employee";
 
     private static final String SELECT_BY_ID =
-            "SELECT * FROM mydb.customers WHERE Idcust=?";
+            "SELECT * FROM mydb.employee WHERE Room_number=?";
 
     private static final String SELECT_BY_NAME =
-            "SELECT * FROM mydb.customers WHERE name=?";
+            "SELECT * FROM mydb.employee WHERE name=?";
 
     private static final String DELETE_CUST =
-            "DELETE FROM customers WHERE Idcust=?";
+            "DELETE FROM employee WHERE Idcust=?";
 
     private static final String COUNT_CUST_IN_ROOM =
-            "SELECT COUNT(Idcust)AS count FROM mydb.customers WHERE Room_number=?";
+            "SELECT COUNT(Idcust)AS count FROM mydb.employee WHERE Room_number=?";
 
     private static final String LIST_OF_EMPLOYEES_COUNT_IN_ROOM =
-            "select room_number, count(Name) from mydb.customers where Room_number between 1 and ? group by room_number";
+            "select room_number, count(Name) from mydb.employee where Room_number between 1 and ? group by room_number";
 
     private ConnectionToDatabaseBuilder builder = ConnectionToDatabaseBuilderFactory.getMySQLConnectionBuilder();
     private static final Logger log = Logger.getLogger(EmployeesJDBCImpl.class);
@@ -82,12 +82,12 @@ public class EmployeesJDBCImpl implements EmployeesDao {
     }
 
     @Override
-    public List<Employees> selectEmployeeById(Integer id) throws NoSuchIdException {
+    public List<Employees> selectEmployeeByRoomNumber(Long roomNumber) throws NoSuchRoomNumberException {
         Employees employees = null;
         List<Employees> list = new ArrayList<>();
         try (Connection connection = getConnection();
              PreparedStatement prepSt = connection.prepareStatement(SELECT_BY_ID)) {
-            prepSt.setInt(1, id);
+            prepSt.setLong(1, roomNumber);
             try (ResultSet resultSet = prepSt.executeQuery()) {
                 while (resultSet.next()) {
                     employees = employeesFiller.fiilTheEntityBeanByResultSet(resultSet);
@@ -100,7 +100,7 @@ public class EmployeesJDBCImpl implements EmployeesDao {
         if (employees != null) {
             return list;
         } else {
-            throw new NoSuchIdException("Нет записи в\"employees\" с ID " + id + "\n");
+            throw new NoSuchRoomNumberException("Нет записи в\"employees\" с номером комнаты: " + roomNumber + "\n");
         }
     }
 

@@ -1,12 +1,10 @@
 package ru.homework.service;
 
-import ru.homework.dao.EmployeesDao;
-import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NoSuchRoomNumberException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
 
-import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.HashMap;
 import java.util.List;
@@ -33,9 +31,9 @@ public interface Service<T> {
      *
      * @param id
      * @return
-     * @throws NoSuchIdException
+     * @throws NoSuchRoomNumberException
      */
-    List<T> getEmployeeById(Integer id) throws NoSuchIdException;
+    List<T> getEmployeeByRoomNumber(Long id) throws NoSuchRoomNumberException;
 
     /**
      * Метод для получения списка всех сотрудников

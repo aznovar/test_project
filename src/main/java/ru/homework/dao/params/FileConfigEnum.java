@@ -5,7 +5,7 @@ package ru.homework.dao.params;
  * получения доступа к файлу, который содержит данные для обработки
  */
 public enum FileConfigEnum {
-    PATH_TO_CSV_TABLE("src/main/resources/employees.csv");
+    PATH_TO_CSV_TABLE("C:/Users/ao.chelkanov/Desktop/HomeWork/src/main/resources/employees.csv");
 
     private String pathToFile;
 

@@ -23,7 +23,7 @@ public final class EmployeesOutputHelper implements OutputHelper<Employees> {
                 System.out.println("\n" + list + "\n");
             }
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Сотрудник не найден в списке");
+            System.out.println("Такой комнаты нет в списке");
             log.info(e);
         }
     }

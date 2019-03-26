@@ -2,7 +2,7 @@ package ru.homework.service;
 
 import ru.homework.dao.EmployeesDao;
 import ru.homework.dao.entity.Employees;
-import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NoSuchRoomNumberException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
@@ -37,8 +37,8 @@ public class EmployeesService implements Service<Employees> {
     }
 
     @Override
-    public List<Employees> getEmployeeById(Integer id) throws NoSuchIdException {
-        return employeesDao.selectEmployeeById(id);
+    public List<Employees> getEmployeeByRoomNumber(Long id) throws NoSuchRoomNumberException {
+        return employeesDao.selectEmployeeByRoomNumber(id);
     }
 
     @Override

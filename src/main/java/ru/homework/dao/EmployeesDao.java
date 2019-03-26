@@ -1,13 +1,11 @@
 package ru.homework.dao;
 
 import ru.homework.dao.entity.Employees;
-import ru.homework.exceptions.NoSuchIdException;
+import ru.homework.exceptions.NoSuchRoomNumberException;
 import ru.homework.exceptions.NoSuchNameException;
 import ru.homework.exceptions.NotUniqueIdException;
 import ru.homework.exceptions.NotUniqueNameException;
-import ru.homework.service.SourceDistributor;
 
-import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +24,11 @@ public interface EmployeesDao {
     void insertEmployees(Employees employees) throws NotUniqueIdException, NotUniqueNameException;
 
     /**
-     * Метод по получению сотрудника по id
+     * Метод для поиска сотрудников по номеру комнаты
      *
-     * @param id
+     * @param roomNumber
      */
-    List<Employees> selectEmployeeById(Integer id) throws NoSuchIdException;
+    List<Employees> selectEmployeeByRoomNumber(Long roomNumber) throws NoSuchRoomNumberException;
 
     /**
      * Метод по получению списка всех сотрудников

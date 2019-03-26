@@ -54,10 +54,10 @@ public class EmployeesCSVImpl implements EmployeesDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Employees> selectEmployeeById(Integer id) {
+    public List<Employees> selectEmployeeByRoomNumber(Long roomNumber) {
         List<Employees> employees1 = contentParser.getContentOfFile();
         return employees1.stream()
-                .filter(it -> it.getId().equals(id))
+                .filter(it -> it.getRoomNumber().equals(roomNumber))
                 .collect(Collectors.toList());
     }
 
